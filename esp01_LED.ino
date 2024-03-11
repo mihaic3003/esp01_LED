@@ -208,7 +208,6 @@ void webServer(){
   - daca nu apas butonul pentru mai mult de 5 secunde resetez timpul la 15 sec(valoare default)
   - dupa numarul de secunde dorit (1 = 15sec), astept timpul de iesire din programare
   - dupa 5 secunde urmeaza un numar de clipiri egal cu numarul unitatilor programate  */
-
 void ZaProsijar() {
   WiFi.mode(WIFI_OFF);
   delay(100);

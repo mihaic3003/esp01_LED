@@ -1,8 +1,13 @@
+/*de facut:
+    - metoda de programare a temporizarii date de apasarea butonului
+    - daca am apasat butonul si il mai apas odata dupa 5 sec, intra in modul de programare...
+*/
+
 #include <ESP_EEPROM.h>
 #include <ESP8266WiFi.h>
  
-const char* ssid = "GVPM_CS_2";//type your ssid
-const char* password = "GVPM_CS_2023";//type your password
+const char* ssid = "ssid";//type your ssid
+const char* password = "pass";//type your password
  
 WiFiServer server(80);
 
@@ -39,9 +44,9 @@ void setup(){
   while (WiFi.status() != WL_CONNECTED) {
     uint32_t timp2 = millis();    // timp curent din care scadem timpul de inceput
     delay(100);
-    if(timp2 - timp1 > 15000) {
+    if(timp2 - timp1 > 1000) {
       WiFi.mode(WIFI_OFF);
-      break;    //daca eu trecut 15 secunde si !wifi.begin(), iesi din while(fara WILLIs)
+      break;    //daca eu trecut 10 secunde si !wifi.begin(), iesi din while(fara WILLIs)
     }
   }
   if(WiFi.status() == WL_CONNECTED) server.begin();   //pornim serverul WEB doar daca este WILLIs 
@@ -232,7 +237,7 @@ void ZaProsijar() {
     }
     timptrecut = millis();
     if((timptrecut - ifZaProsijar) > 5000 && digitalRead(buton)) break;
-    yield(); //o zi si jumatate de batut capul, folosesc delay() sau yieald() din cauza watchdog reset...LA DRACU!!!!
+    yield(); //o zi si jumatate de batut capul, folosesc delay() sau yield() din cauza watchdog reset...LA DRACU!!!!
   }
     if(secunde > 1) secunde --;   //din cauzA si anume ca pornesc de la secunde = 1
     for(uint8_t m = 0; m < secunde ; m ++) {    //doua beepuri de 200ms ca sa stiu ca sunt in programare.
